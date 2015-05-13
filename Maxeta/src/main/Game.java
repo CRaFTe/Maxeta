@@ -22,15 +22,10 @@ public class Game {
 			}
 		}
 
-		Card card1 = new Card(2,"Spades");
-		Card card2 = new Card(2,"Clubs");
-		System.out.println(card2.isSuitGreater(card1));
-		// startGame(numberOfPlayers);
+
+		 startGame(numberOfPlayers);
 		
-//		for(int i = 0; i < gameDeck.getMyDeck().size(); i++) {
-//			System.out.println("Value: " + gameDeck.getMyDeck().get(i).getValue() + 
-//					" Suit: " + gameDeck.getMyDeck().get(i).getSuit());
-//		}
+	
 		
 		
 
@@ -48,11 +43,16 @@ public class Game {
 		// create the deck
 		Deck gameDeck = new Deck();
 		
+//		for(int i = 0; i < gameDeck.getMyDeck().size(); i++) {
+//			System.out.println("Value: " + gameDeck.getMyDeck().get(i).getValue() + 
+//					" Suit: " + gameDeck.getMyDeck().get(i).getSuit());
+//		}
+		
 		// player index leading in points
 		int currentLeader = -1;
 		
 		// start the game
-		while(scoreBoard.getMaxPoints() < 21) {
+		while(!scoreBoard.checkWin()) {
 			//shuffle the deck
 			gameDeck.shuffle();
 			// initialize the player score array
@@ -84,12 +84,31 @@ public class Game {
 					}
 				}
 			}
+			
+			String winningPlayer = "";
+			if(maxPlayerIndex != -1) {
 			playerScores[maxPlayerIndex] = 2;
-			System.out.println("$$$$$ Player " + (maxPlayerIndex+1) + " wins the round with the " + 
-			maxCard.toString() + " $$$$$");
+			
+			winningPlayer = "$$ Player " + (maxPlayerIndex+1) + " wins the round with the " + 
+			maxCard.toString() + " $$";
+			}
+			else {
+				winningPlayer = "$$ All players are losers this round, only penalty cards were drawn $$";
+			}
+			String dollarSign = "";
+			String dashLine = "";
+			for(int k = 0; k < winningPlayer.length();k++) {
+				dollarSign += "$";
+				dashLine += "_";
+			}
+			System.out.println(dollarSign);
+			System.out.println(winningPlayer);
+			System.out.println(dollarSign);
 			
 			currentLeader = scoreBoard.updateScores(playerScores);
 			scoreBoard.printScores();
+			System.out.println(dashLine);
+			
 			
 		}
 	}

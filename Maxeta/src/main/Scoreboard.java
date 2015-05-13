@@ -28,11 +28,32 @@ public int updateScores(int[] pScores) {
 	return maxPIndex;
 }
 public void printScores() {
-	System.out.println("@@@@@ Current Scores @@@@@");
+	System.out.println("             @@@@@  SCORES @@@@@");
+	String rightSideScoreBoard;
 	for(int i = 0; i < playerScores.length; i++) {
-		System.out.println("Player " + (i+1) +": " + playerScores[i]);
+		if(playerScores[i]-9 > 0) rightSideScoreBoard = "  @@";
+		else rightSideScoreBoard = "   @@";
+		System.out.println("             @@ Player " + (i+1) +": " + playerScores[i] + rightSideScoreBoard);
 	}
-	System.out.print("\n\n");
+	System.out.print("             @@@@@@@@@@@@@@@@@@@\n\n");
+}
+public boolean checkWin() {
+	if(maxPoints >= 21 && closestSecond() > 2) {
+		return true;
+	}
+	else return false;
+}
+public int closestSecond() {
+	int maxIndex = updateScores(new int[playerScores.length]);
+	int closeSecond = 21;
+	for(int i = 0; i < playerScores.length; i++) {
+		if(i != maxIndex) {
+			if(playerScores[maxIndex] - playerScores[i] < closeSecond) {
+				closeSecond = playerScores[maxIndex] - playerScores[i];
+			}
+		}
+	}
+	return closeSecond;
 }
 public int getMaxPoints() {
 	return this.maxPoints;

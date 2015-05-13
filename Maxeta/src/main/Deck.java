@@ -25,7 +25,7 @@ Deck() {
 					break;
 			case 2: tempSuit = "Diamond";
 					break;
-			case 3: tempSuit = "Heart";
+			case 3: tempSuit = "Club";
 					break;
 			default: tempSuit = "NoSuit";
 			
