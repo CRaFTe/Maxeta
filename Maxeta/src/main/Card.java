@@ -1,11 +1,16 @@
 package main;
 
+/**
+ * 
+ * @author Micah T. Moore
+ *
+ */
 public class Card {
 private int value;
 private String suit;
 Card(int v, String s) {
-	this.setValue(v);
-	this.setSuit(s);
+	value = v;
+	suit = s;
 }
 @Override
 public String toString() {
@@ -35,15 +40,18 @@ public String toString() {
     
 }
 // if the cards have the same face value, check which suit is greater
+// Spade > Heart > Diamond > Club
 public boolean isSuitGreater(Card anotherCard) {
-	if(getSuit().equals("Clubs") || anotherCard.getSuit().equals("Spades")){
+	if(getSuit().equals("Club") || anotherCard.getSuit().equals("Spade")){
 		return false;
 	}
-	else if(getSuit().equals("Diamonds") && !anotherCard.getSuit().equals("Clubs")){
+	else if(getSuit().equals("Diamond") && 
+			!anotherCard.getSuit().equals("Club")){
 		return false;
 	}
-	else if(getSuit().equals("Hearts") && (!anotherCard.getSuit().equals("Diamonds") && 
-			!anotherCard.getSuit().equals("Clubs"))) {
+	else if(getSuit().equals("Heart") && 
+			(!anotherCard.getSuit().equals("Diamond") && 
+					!anotherCard.getSuit().equals("Club"))) {
 		return false;
 	}
 	else return true;
