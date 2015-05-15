@@ -11,8 +11,8 @@ import java.util.Scanner;
  * (2-4) and the game begins.  Each player picks one card from the shuffled deck
  * each round.  The player with the highest value card wins the round and is 
  * awarded 2 points.  If two or more players draw the same highest value card, 
- * then rank is determined by suit as follows: 
- * Spades > Hearts > Diamonds > Clubs.
+ * then rank is determined by suit as follows (greatest to least): 
+ * Spades, Hearts, Diamonds, Clubs.
  * If any player draws a 'penalty card' he is assigned -1 points for that round.
  * The game continues until a player reaches 21 points or over and the closest
  * second place player is more than 1 point away.
@@ -46,8 +46,8 @@ public class Game {
 		}
 	}
 	/**
-	 * This method starts the game after the number of players is determined.
-	 * It creates the player list, score board, and deck.
+	 * Starts the game after the number of players is determined.
+	 * Creates the player list, score board, and deck.
 	 * Each round is started by shuffling the deck.  Each player is prompted to
 	 * push enter to draw a card, then the cards are compared to find any 
 	 * penalty cards and the winner of the round.  If only penalty cards are 
@@ -69,7 +69,8 @@ public class Game {
 		// create the score board
 		Scoreboard scoreBoard = new Scoreboard(players);
 		// create the deck
-		Deck gameDeck = new Deck();
+		String[]suits = {"Spade","Heart","Diamond","Club"};
+		Deck gameDeck = new Deck(2,14,suits,4);
 		
 		
 		// player index leading in points
@@ -80,7 +81,7 @@ public class Game {
 		System.out.println("_________________________"
 				+ "___________________________");
 		
-		// start the game
+		// continue playing the game until someone wins
 		while(scoreBoard.checkWin(players) < 0) {
 			System.out.println("                       Round #" + (round+1));
 			gameDeck.shuffle();
@@ -194,7 +195,7 @@ public class Game {
 	/**
 	 * Checks if a given integer is within the range 2-4 inclusive.
 	 * @param n integer to check whether it's in the range.
-	 * @return True if 2 <= n <= 4. False otherwise.
+	 * @return True if n is between 2 and 4 inclusive. False otherwise.
 	 */
 	private static boolean isInRange(int n) {
 		if(n >= 2 && n <= 4) return true;
@@ -209,7 +210,7 @@ public class Game {
 		
 	}
 	/**
-	 * Checks whether the user wants to play on by asking them with a prompt.
+	 * Checks whether the user wants to play again by asking them with a prompt.
 	 * The user's response isn't case sensitive so they can enter any variation 
 	 * of y,yes,n,n and it would be accepted as an input.  If he enters anything
 	 * else he is prompted to answer again.
@@ -221,7 +222,7 @@ public class Game {
 		Scanner in2 = new Scanner(System.in);
 		 boolean validInput = false;
 		 while(!validInput) {
-		 System.out.println("\nWould you like to play another game? (Y/N)");
+		 System.out.println("\nWould you like to play again? (Y/N)");
 		 String s2 = in2.nextLine();
 		 if(s2.toLowerCase().equals("n") || s2.toLowerCase().equals("no")) {
 			 keepPlaying = false;
