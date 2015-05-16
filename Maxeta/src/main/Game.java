@@ -30,8 +30,31 @@ public class Game {
 		int numberOfPlayers = 0;
 		String s;
 		System.out.println("      ++++++Card Game++++++");
+		System.out.println("\nInstructions:");
+		String instructions = "At the begining of the game you will be prompted"
+				+ " to enter the number of players (2-4). Every round "
+				+ "consists of each player pressing enter to draw a card. "
+				+ "The card the player draws will be displayed on the screen. "
+				+"Once every player has drawn a card for a given round,"
+				+ " the card values will be checked against eachother. Ace "
+				+ "being the highest and 2 being the lowest. The player"
+				+ " with the highest valued card will win the round and be "
+				+ "awarded two points. If two players or more draw a card with"
+				+ " the same highest value, the suits will be compared. Suits "
+				+ "are ranked in the following order from greatest to least:"
+				+ " Spade, Heart, Diamond, Club. There are also special "
+				+ "penalty cards (4 in the deck). Whenever a player draws "
+				+ "a penalty card he is penalized 1 point for the round. "
+				+ "At the end of each round the winning player will be shown "
+				+ "along with what card they won with. The score board will "
+				+ "also be displayed to show each player's current total "
+				+ "score. The game continues until one of the players reaches "
+				+ "21 points or higher and is leading the second place player "
+				+ "by at least 2 points.";
+		System.out.println(wrapBigString(instructions,80));
+		System.out.println("Thanks for playing! Have fun!");
 		while(!correctInput) {
-			System.out.println("\nPlease Enter the Number of Players(2-4): ");
+			System.out.println("\nPlease enter the number of players(2-4):");
 			s = in.nextLine();
 			if(isInteger(s)) {
 				if(isInRange(Integer.parseInt(s))) {
@@ -49,12 +72,13 @@ public class Game {
 	 * Starts the game after the number of players is determined.
 	 * Creates the player list, score board, and deck.
 	 * Each round is started by shuffling the deck.  Each player is prompted to
-	 * push enter to draw a card, then the cards are compared to find any 
-	 * penalty cards and the winner of the round.  If only penalty cards are 
-	 * drawn that round, there is no winner of the round.  The cards are 
-	 * displayed on the screen as they are drawn. At the end of each round
-	 * the winner of the round and what card he won with are displayed.  The 
-	 * score board is also displayed with each players total current score.
+	 * push enter to draw a card, any penalty cards are found and 
+	 * the cards are compared to find the winner of the round.  
+	 * If only penalty cards are drawn that round, there is no winner of the 
+	 * round.  The cards are displayed on the screen as they are drawn. At the 
+	 * end of each round the winner of the round and what card he won with are 
+	 * displayed.  The score board is also displayed with each players total 
+	 * current score.
 	 * @param players number of players for the game.
 	 */
 	public static void startGame(int players) {
@@ -239,6 +263,36 @@ public class Game {
 		 }
 		 return keepPlaying;
 		
+	}
+	/**
+	 * Takes a long string and returns it broken up in lines no longer than a 
+	 * given line length.
+	 * @param str Long string to be wrapped.
+	 * @param lineLength Width of each line desired.
+	 * @return String with new line characters added before each word that
+	 * would make the line longer than lineLength characters.
+	 */
+	private static String wrapBigString(String str, int lineLength) {
+		String outputStr = "";
+		String eachLine = "";
+		String[] splitString = str.split(" ");
+		for(int i = 0; i < splitString.length; i++) {
+			if(eachLine.isEmpty()) {
+				eachLine += splitString[i];
+			}
+			else if(eachLine.length() + splitString[i].length() < lineLength) {
+				eachLine += " " + splitString[i];
+				if(i == splitString.length - 1) {
+					outputStr += eachLine;
+				}
+			}
+			else {
+			outputStr += eachLine + "\n";
+			eachLine = "";
+			i--;
+			}
+		}
+		return outputStr;
 	}
 
 }
